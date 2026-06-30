@@ -1,0 +1,76 @@
+{
+  // opencode config template -- see guides/03-connect-opencode.md
+  // Copy to ~/.config/opencode/opencode.jsonc and edit the baseURL.
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "local": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        // local server on the same machine:
+        "baseURL": "http://localhost:8080/v1",
+        // ...or a server on your network (server must run with --host 0.0.0.0):
+        // "baseURL": "http://<server-ip>:8080/v1",
+        "apiKey": "not-needed",
+        "name": "local"
+      },
+      "models": {
+        "qwen3.6-35b": {
+          "name": "Qwen3.6 35B MoE (local)"
+        }
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "prompt": "You are a helpful expert software developer.\n\n## Follow the codebase first\nIf a pattern already exists in the current codebase, follow it -- even if you'd personally write it differently. Match the surrounding code's style, structure, and conventions before applying any defaults.\n\n## Test-driven development\nWrite the tests first, then write the code that makes them pass.\n\n## Bash\n- Quote variables: \"$var\", \"${arr[@]}\".\n- Start scripts with set -euo pipefail.\n- Prefer absolute paths; avoid cd chains in scripts.\n- Test destructive commands (rm, dd, mkfs) on a safe target first and show them before running.\n\n## Keep it lean\n- The best code is the code you never wrote -- reuse the stdlib and existing deps before writing custom logic.\n- Write only what the task genuinely requires; small code comes from necessity, not golfing.\n\n## Add your own conventions here\n- Replace this section with your team's language, style, and API conventions."
+    },
+    "plan": {
+      "prompt": "You are a helpful expert software developer.\n\nYou are in PLAN mode: think and propose, do not edit or run mutating commands.\n\n## How to plan\n- Laziness as a feature: the best code is the code you never wrote. Prefer deleting over adding.\n- Read before building: trace the real code flow and understand context first. Be lazy about the solution, never about reading.\n- Walk the decision ladder before proposing new code:\n  1. Does this need to exist at all? (YAGNI -- skip it if not)\n  2. Is it already in this codebase? (reuse, don't rewrite)\n  3. Does the standard library or a native platform feature cover it? (use it)\n  4. Does an already-installed dependency cover it? (use it)\n  5. Can it be one line? (make it one line)\n  6. Only then: plan the minimum viable solution.\n- Never compromise safety to cut code: validation at trust boundaries, data-loss handling, and security stay non-negotiable."
+    }
+  },
+  "permission": {
+    // File reading; always allowed
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "lsp": "allow",
+    "list": "allow",
+
+    // Web; ask before fetching
+    "webfetch": "ask",
+    "websearch": "ask",
+
+    // File editing; ask before writing
+    "edit": "ask",
+
+    // safe read-only commands allowed; everything else asks; dangerous ops denied
+    "bash": {
+      "*":            "ask", // by default, ask.
+      "ls*":          "allow",
+      "find*":        "allow",
+      "cat*":         "allow",
+      "echo*":        "allow",
+      "pwd":          "allow",
+      "which*":       "allow",
+      "grep*":        "allow",
+      "wc*":          "allow",
+      "head*":        "allow",
+      "tail*":        "allow",
+      "stat*":        "allow",
+      "file*":        "allow",
+      "du*":          "allow",
+      "df*":          "allow",
+      "env":          "allow",
+      "printenv*":    "allow",
+      "systemctl status*":  "allow",
+      "journalctl*":        "allow",
+      // Version control / dangerous; not allowed
+      "git*":         "deny",
+      "svn*":         "deny",
+      "chmod 777*":   "deny",
+      "> /*":         "deny",
+      "dd*":          "deny",
+      "mkfs*":        "deny",
+    }
+  }
+}

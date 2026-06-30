@@ -1,0 +1,23 @@
+[Unit]
+Description=llama.cpp MoE inference server
+After=network.target
+StartLimitIntervalSec=120
+StartLimitBurst=3
+
+[Service]
+Type=simple
+# --- EDIT THESE for your machine ---
+User=<user>
+WorkingDirectory=/home/<user>/local-llm-setup-bits
+ExecStart=/home/<user>/local-llm-setup-bits/scripts/run-nvidia.sh
+# -----------------------------------
+Restart=on-failure
+RestartSec=15
+LimitMEMLOCK=infinity
+LimitNOFILE=65536
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=llama-server
+
+[Install]
+WantedBy=multi-user.target

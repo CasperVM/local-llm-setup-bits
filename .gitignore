@@ -1,0 +1,11 @@
+# Model weights — never commit (multi-GB)
+models/
+*.gguf
+
+# llama.cpp source/build — clone it per the setup guides
+llama.cpp/
+
+# Python venv for the hf CLI
+.venvs/
+venv/
+__pycache__/
