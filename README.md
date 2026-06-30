@@ -12,6 +12,10 @@ All profiles serve the **same model** by default (`Qwen3.6-35B-A3B`, a ~35B MoE 
 ~3B active params, in Q4_K_M GGUF — ~22 GB on disk). The model is swappable; see
 [`guides/01-download-model.md`](guides/01-download-model.md).
 
+> **Pinned build:** the guides build llama.cpp at tag **`b9843`** (commit `86b9470`) —
+> the release these configs were tested against, so your build matches the tuning notes.
+> Newer versions usually work too, but pin this if something misbehaves.
+
 ---
 
 ## How it works (the 30-second version)
@@ -32,7 +36,7 @@ All profiles serve the **same model** by default (`Qwen3.6-35B-A3B`, a ~35B MoE 
 | Profile | GPU | Free RAM | Backend | Guide |
 |---|---|---|---|---|
 | **AMD integrated GPU** | Radeon iGPU (RDNA3, e.g. 780M), shared memory | a lot (model lives in shared RAM/GTT) | ROCm / HIP | [`setups/amd-igpu-rocm.md`](setups/amd-igpu-rocm.md) |
-| **Small NVIDIA GPU** | ~7–8 GB VRAM | ≥16 GB | CUDA | [`setups/nvidia-8gb-cuda.md`](setups/nvidia-8gb-cuda.md) ⚠️ *draft / untested* |
+| **Small NVIDIA GPU** | ~7–8 GB VRAM | ≥16 GB | CUDA | [`setups/nvidia-8gb-cuda.md`](setups/nvidia-8gb-cuda.md) — *verified on RTX 3070* |
 | **Larger NVIDIA GPU** | ~15 GB+ VRAM (server-class) | ≥16 GB | CUDA | [`setups/nvidia-16gb-cuda.md`](setups/nvidia-16gb-cuda.md) |
 
 Don't see your exact card? Pick the closest profile and adjust `--n-cpu-moe` — the setup

@@ -46,7 +46,9 @@ nvcc --version    # confirm the version
 ## Step 2 — Build llama.cpp
 
 ```bash
-git clone --depth 1 https://github.com/ggml-org/llama.cpp.git
+# pinned to the release these configs were built & tested against.
+# tag b9843 == commit 86b94708f22478f900b76ca02e316f4f3418faff
+git clone --depth 1 --branch b9843 https://github.com/ggml-org/llama.cpp.git
 cd llama.cpp
 rm -rf build
 cmake -B build -DGGML_CUDA=ON -DCMAKE_BUILD_TYPE=Release

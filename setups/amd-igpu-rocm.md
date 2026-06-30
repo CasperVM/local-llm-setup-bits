@@ -75,8 +75,9 @@ export HSA_OVERRIDE_GFX_VERSION=11.0.0   # treat gfx1103 as the stable gfx1100
 ## Step 3 — Build llama.cpp for `gfx1100`
 
 ```bash
-# get the source
-git clone --depth 1 https://github.com/ggml-org/llama.cpp.git
+# get the source, pinned to the release these configs were built & tested against.
+# tag b9843 == commit 86b94708f22478f900b76ca02e316f4f3418faff
+git clone --depth 1 --branch b9843 https://github.com/ggml-org/llama.cpp.git
 cd llama.cpp
 
 # build the HIP backend, targeting gfx1100 (NOT native gfx1103)
